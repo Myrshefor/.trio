@@ -44,7 +44,8 @@ Unzip `trio-sync-marketplace.zip` somewhere permanent first (not a temp folder),
 Plain chat conversations — in the Claude Desktop app or on claude.ai — don't automatically read files on your computer the way Cowork and Claude Code do, and that's a hard product limit, not a permissions setting — no amount of folder or device access changes it. Two ways to bridge that:
 
 1. **Best option — Claude Projects (semi-automatic).** If the project has a Claude Project on claude.ai attached, Cowork mirrors `.trio/STATUS.md` into a doc there (`claude/trio-status-snapshot.md`) every time it does real trio-sync work — built into the skill since v0.2.0. As of v0.3.0, Cowork also mirrors `.trio/FROM_CODE.md` (`claude/trio-from-code-snapshot.md`) and new `.trio/DIALOGUE.md` entries (`claude/trio-dialogue-mirror.md`), so Chat can see what Code just reported and the full verbatim exchange history too. As long as you chat *inside* that Project (not a stray conversation), all of these mirrors are pulled into context automatically, no pasting needed. `STATUS.md`'s mirror only covers the current snapshot; the dialogue mirror is cumulative and never trimmed — see `.trio/LEDGER.md` on disk for the terse full history either way.
-2. **Always works, no setup required:** at the start of a chat, paste or attach `.trio/STATUS.md` (or the Project's mirror doc). At the end, ask Claude to write a short summary and paste it into `LEDGER.md` yourself (or hand it to Cowork/Claude Code next time and ask them to log it for you).
+2. **As of v0.4.0, if `.trio/` lives in a public GitHub repo:** Cowork also mirrors `claude/trio-chat-links.md` — direct links to every protocol file and doc. Because it's mirrored the same way as the other Project docs, Chat gets it automatically inside the Project too, but it lets Chat pull the *live* current version of any file via a web fetch instead of whatever Cowork last copied into a snapshot. One real limitation: Chat can only follow a link that's already literally present in the conversation — it can't browse the repo tree or guess a file's URL from just the repo root. See `docs/architecture.md` §5.
+3. **Always works, no setup required:** at the start of a chat, paste or attach `.trio/STATUS.md` (or the Project's mirror doc). At the end, ask Claude to write a short summary and paste it into `LEDGER.md` yourself (or hand it to Cowork/Claude Code next time and ask them to log it for you).
 
 Chat's role here — thinking partner and sanity-checker — doesn't need deep file access to be useful; it mainly needs the gist, which either option above gives it.
 
@@ -55,7 +56,22 @@ You don't need to remember commands. Once installed:
 - Starting work on a project that has a `.trio/` folder → the surface reads it automatically and briefly tells you what the others have been up to.
 - Ask "catch me up" / "what's the status" / "what did Code do" any time.
 - After something worth flagging happens, the surface updates the ledger and status on its own. You can also just say "log that" or "update the trio status" to force it.
-- To turn this on for a new project: say "set up trio sync here" (or "connect the trio here") and the skill creates the `.trio/` folder for you.
+- To turn this on for a new project: say "set up trio sync here" (or "connect the trio here") and the skill creates the `.trio/` folder for you — including the GitHub/`CHAT_LINKS.md` question from v0.4.0.
+
+### Quick trigger phrases (v0.4.0)
+
+Finalized so you don't have to re-explain context each time — say these to any surface, in Russian, roughly as written:
+
+| Phrase (as you'd actually say it) | What happens |
+|---|---|
+| «настрой trio-sync здесь» | Creates `.trio/` on a new project, including the GitHub/`CHAT_LINKS.md` step |
+| «какой статус» / «догони меня» | Any surface reads `STATUS.md` + the latest `LEDGER.md` entries and briefly recaps |
+| «передай Code: <текст>» | The question goes into `TO_CODE.md` (Cowork writes it on your behalf, or you paste it into Code yourself) |
+| «что ответил Code» / «покажи FROM_CODE» | Reads `FROM_CODE.md` and relays the answer |
+| «подумай с Chat над: <текст>» (to Cowork) | Cowork drafts the question; you bring it to Chat yourself |
+| «передай Cowork: <текст>» (to Chat) | Chat hands you a ready-made phrasing; you paste it into Cowork |
+| «залогируй это» | Forces a `LEDGER.md`/`STATUS.md` write right now, instead of waiting for the usual trigger |
+| «обнови ссылки» | Regenerates `CHAT_LINKS.md` / `claude/trio-chat-links.md` if new files have shown up in the repo |
 
 ## Files in this plugin
 

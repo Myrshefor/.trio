@@ -89,6 +89,20 @@ _Full text of everything exchanged through TO_CODE.md / FROM_CODE.md, newest fir
 
 Tell the user in plain language what was set up and that the other two surfaces can now read it too — this only works once trio-sync is installed or enabled on those surfaces as well.
 
+### Also ask about Chat visibility via public GitHub (v0.4.0)
+
+Right after creating the five files, whichever surface is doing the setup (Code or Cowork — both have disk access) should also run this step:
+
+1. Ask the user: "Will this project have a public GitHub repo for `.trio/`? If so, share the link (or we can create one right now, the way we did for trio-sync's own repo)."
+2. If yes — generate `.trio/CHAT_LINKS.md`: one line per key file, `<repo_url>/blob/<branch>/<path>/<file>`, covering the five protocol files plus everything under `docs/`. Use this project's real paths, not a placeholder.
+3. Deliver it into the user's Claude Project, in priority order:
+   - If a Claude Project is attached to the current session — write it there directly (e.g. `claude/trio-chat-links.md`) via the Projects tool, no manual step for the user.
+   - If no Project is attached this session — hand the generated content to the user directly and ask them to paste it into that Project's Knowledge themselves.
+4. If there's no GitHub repo yet, note it as an open item in `STATUS.md` ("Chat visibility limited to manual paste + Cowork's mirror") and don't block the rest of setup on it.
+5. If a GitHub repo shows up later without a `CHAT_LINKS.md` to match, whichever surface notices should offer to set it up — not leave it silently missing.
+
+This is additive to the Project mirroring in the next section, not a replacement — see `docs/architecture.md` §5 for the full mechanism and rationale (chief limitation: Chat can only follow a link that's already literally present in the conversation; it cannot walk a repo tree or guess a file's URL from the repo root alone).
+
 ## At the start of substantial work
 
 If `.trio/` exists, before diving into the user's request:
@@ -112,8 +126,22 @@ Use this when a surface needs a direct answer from another, not just a general s
 2. **Code answering:** read `.trio/TO_CODE.md`, address the open item, then append the answer to the top of `.trio/FROM_CODE.md` (newest first). Remove or mark resolved the corresponding entry in `TO_CODE.md` once answered, so that file only ever shows what's still outstanding.
 3. **Cowork/Chat picking up the answer:** read `.trio/FROM_CODE.md`, then remove or mark resolved the entry once it's been seen and acted on.
 4. **Either side, once an exchange is resolved:** append the full verbatim question-and-answer pair to the top of `.trio/DIALOGUE.md`. This is the only place the complete, unabridged text lives permanently — never summarize or trim it. Reference this dialogue entry from `LEDGER.md` with a one-line summary rather than duplicating the full text there.
+5. **Also required (v0.4.0):** whoever closes the exchange adds one line to `.trio/LEDGER.md` — either its own short entry or a line inside a larger entry from the same session:
+   ```
+   Resolved: <date closed> — <Code|Cowork|Chat> — see DIALOGUE.md (<date of original entry>)
+   ```
+   This makes closed exchanges visible directly in the `LEDGER.md` feed without having to cross-check `DIALOGUE.md` for the fact that something was resolved (the actual content still only lives in `DIALOGUE.md`).
 
-Keep `TO_CODE.md` and `FROM_CODE.md` limited to genuinely open items — once resolved and copied into `DIALOGUE.md`, remove the resolved entry from the inbox file so it stays a quick "what's outstanding" glance for whoever checks it next.
+Keep `TO_CODE.md` and `FROM_CODE.md` limited to genuinely open items — once resolved and copied into `DIALOGUE.md` (with the `Resolved:` line above), remove the resolved entry from the inbox file so it stays a quick "what's outstanding" glance for whoever checks it next.
+
+### DIALOGUE.md rotation (v0.4.0)
+
+"Never trimmed" means content is never deleted or shortened — it doesn't mean the file has no size limit. When `DIALOGUE.md` reaches roughly 200 resolved exchanges or ~300 KB (whichever comes first), whoever just appended the entry that crossed the threshold rotates it:
+
+1. Cut the oldest entry block (a full `---`-to-`---` record) out of `DIALOGUE.md` and move it, unchanged, into `.trio/DIALOGUE-archive-<year>.md` (year of that entry's own date). That archive file follows the exact same rules as `DIALOGUE.md` itself — append-only, newest-first, never trimmed except on explicit user request.
+2. Leave one pointer line at the top of `DIALOGUE.md`, right under the header: `_Archive older than <date of oldest remaining entry> — see DIALOGUE-archive-<year>.md._`
+
+Check the threshold after appending, before considering the work done — not on every read.
 
 ## After finishing meaningful work
 
@@ -157,3 +185,6 @@ Code and Chat don't have a Projects tool, so this step is Cowork-only. If no Pro
 - If `.trio/*.md` and `CLAUDE.md` seem to disagree about what Code reported, `.trio/*.md` is the source of truth for trio-sync purposes — `CLAUDE.md` was never supposed to carry that information (see the warning above).
 - This protocol only works when all three surfaces actually have trio-sync installed or enabled. If asked why another surface "didn't see" something, check whether trio-sync is set up there too, and whether it wrote to `.trio/*.md` rather than some other file — see this plugin's README.
 - Reusing trio-sync on a new project doesn't require reinstalling anything — the plugin/skill is already active for every project on this account. Just say "set up trio sync here" on the new project to create its `.trio/` folder.
+- `DIALOGUE-archive-<year>.md` files (from rotation, v0.4.0) follow the same never-trim rule as `DIALOGUE.md` itself.
+- `CHAT_LINKS.md` (v0.4.0) is optional — it's an extra visibility channel for Chat, not a required part of the protocol. No public GitHub repo means no `CHAT_LINKS.md`, and that's fine; Project mirroring still works on its own. See `docs/architecture.md` §5 and `docs/scenarios.md` for the full picture and how the six cross-surface directions map to files.
+- If `CHAT_LINKS.md` exists but the file set it points to has since changed (new `docs/` file, a rename, a new `DIALOGUE-archive-*.md`), whoever notices should refresh it and its Project mirror rather than leave stale links.

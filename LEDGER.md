@@ -4,6 +4,28 @@ _Newest entry at the top. Keep entries short — a few lines, not a transcript. 
 _Записи до 2026-07-30 (ниже отмечено) — общая предыстория с проектом Finanon, где протокол физически создавался до разделения на два репозитория. Та же самая история сохранена и в `Finanon\.trio\LEDGER.md` — дальше истории двух проектов расходятся, каждый ведёт свою. Подробный разбор инцидентов — `docs/history-and-incidents.md`._
 
 ---
+### 2026-07-30 (v0.4.0 — commit + push) — Code
+**Resolved:** 2026-07-30 — Code — см. DIALOGUE.md (2026-07-30, v0.4.0 upgrade)
+**Did:** Прочитал `TO_CODE.md`, сверил каждый файл из списка Cowork напрямую через `git diff`/`git status`/чтение содержимого — не поверил списку на слово. Расхождений не нашёл: `plugin/.claude-plugin/plugin.json` (0.3.0 → 0.4.0), `docs/architecture.md` (§5 видимость через GitHub, ротация DIALOGUE.md и конвенция resolved под §2, renumbering), новый `docs/scenarios.md`, `plugin/skills/trio-sync/SKILL.md`, `plugin/README.md` (канал CHAT_LINKS.md + таблица триггеров), `README.md`, новый `CHAT_LINKS.md`, уже очищенный `FROM_CODE.md`. Закоммитил всё одним коммитом и запушил в `origin/main`.
+**Touched:** все файлы v0.4.0-апгрейда (см. список выше), `TO_CODE.md`/`FROM_CODE.md` (очищены), `DIALOGUE.md`, `STATUS.md`, `LEDGER.md` (этот файл)
+**Handoff:** Пункт в `STATUS.md` → Next actions про проверку/коммит/push v0.4.0 закрыт. trio-sync теперь v0.4.0 и на GitHub.
+
+---
+### 2026-07-30 (scenarios.md — реальный черновик получен) — Cowork
+**Did:** chyits прислал оригинальный `trio-scenarios-addendum-draft.md` (подготовлен Chat) уже в ходе этой сессии, после того как `docs/scenarios.md` был написан по реконструкции. Заменил реконструкцию на версию, основанную на реальном черновике — два сценария отличались по сути (2.2 «Cowork → Chat: подумай с Chat» — не про хендофф исполнения, не про TO_CODE/FROM_CODE, а про сверку мышления с записью в LEDGER; 2.4 «Chat → Cowork» — конкретно про признание Chat, что задача слишком тяжёлая/долгая для него), остальное совпало почти дословно. Снял соответствующий открытый пункт из `STATUS.md`.
+**Touched:** `docs/scenarios.md`, `TO_CODE.md`, `STATUS.md`, `LEDGER.md` (этот файл)
+**Handoff:** Для Code снят один из пунктов сверки в `TO_CODE.md` — `docs/scenarios.md` больше не нужно сверять отдельно, там уже реальный черновик, не реконструкция.
+---
+### 2026-07-30 (v0.4.0 upgrade) — Cowork
+**Did:** По заданию chyits (четыре пункта, подготовленные в разговоре с Chat) собрал и подготовил апгрейд trio-sync до v0.4.0: (1) формализовал лимит/ротацию `DIALOGUE.md` (порог 200 разрешённых обменов или ~300 КБ, что раньше — число выбрано Cowork, как и было поручено) и конвенцию «resolved» для `TO_CODE.md`/`FROM_CODE.md` — оба правила теперь часть `docs/architecture.md` §2 и `SKILL.md`, а не открытые вопросы в `STATUS.md`; (2) написал `docs/scenarios.md` — шесть сценариев обмена (Chat→Code, Cowork→Chat, Cowork→Code, Chat→Cowork, Code→Chat, плюс обратные направления) и явную границу «`TO_CODE.md` — только хендофф между сессиями, не собственное чтение файлов Cowork через device-bridge»; (3) спроектировал и встроил в протокол новый канал видимости для Chat — `CHAT_LINKS.md` (файл-указатель с прямыми ссылками на все файлы протокола для публичных GitHub-репозиториев) с приоритетом доставки в Claude Project, плюс шаг настройки в `SKILL.md` для новых проектов; создал реальный `CHAT_LINKS.md` в этом репозитории; (4) зафиксировал таблицу фраз-триггеров в `plugin/README.md`. Версия плагина поднята `0.3.0` → `0.4.0`.
+**Touched:** `plugin/.claude-plugin/plugin.json`, `docs/architecture.md`, `docs/scenarios.md` (новый), `plugin/skills/trio-sync/SKILL.md`, `plugin/README.md`, `README.md`, `CHAT_LINKS.md` (новый), `STATUS.md`, `LEDGER.md` (этот файл)
+**Handoff:** Cowork по-прежнему не имеет доступа на запись в GitHub-аккаунт chyits (как и при создании репозитория, см. запись ниже) — все файлы записаны напрямую на диск через device-bridge (chyits подключил папку `C:\Users\Myrsheftor\Desktop\Claude\.trio` прямо в ходе этой сессии), но не закоммичены. Полный список изменений и просьба закоммитить+запушить — в `TO_CODE.md`. `docs/scenarios.md` реконструирован без оригинального `trio-scenarios-addendum-draft.md` (не был приложен в этой сессии) — нужна сверка chyits, если черновик существует. Мираж `claude/trio-chat-links.md` и `claude/trio-status-snapshot.md` записаны в подключённый Claude Project «Cloude Trio».
+---
+### 2026-07-30 (resolved-convention, первое применение) — Cowork
+**Resolved:** 2026-07-30 — Cowork — см. DIALOGUE.md (2026-07-30)
+**Did:** Убрал из `FROM_CODE.md` запись Code от 2026-07-30 (первый цикл TO_CODE/FROM_CODE), которая уже была полностью перенесена в `DIALOGUE.md`, но так и осталась в инбоксе, не убранной по старому устному правилу. Первое живое применение новой конвенции «resolved» из v0.4.0 — строка выше.
+**Touched:** `FROM_CODE.md`, `LEDGER.md` (этот файл)
+---
 ### 2026-07-30 (инцидент, вне протокола TO_CODE) — Code
 **Did:** По просьбе chyits расследовал отдельный, ещё не залогированный инцидент: верхнеуровневый `C:\Users\Myrsheftor\Desktop\Claude\CLAUDE.md` якобы ненадолго откатился к допротокольному содержимому с новой меткой времени за пару минут до того, как Cowork сегодня перезаписал его текущим коротким указателем. Проверил напрямую:
 - Текущий файл на диске уже содержит правильный, актуальный контент (короткий указатель на `Finanon\.trio\` и на этот репозиторий) — отката сейчас нет.
