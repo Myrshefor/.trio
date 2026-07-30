@@ -7,7 +7,7 @@ _Living snapshot, not a history — see LEDGER.md for that. Last updated: 2026-0
 - **Cowork** — lead strategist, evaluates progress and plans ahead
 
 ## Current focus
-Только что выделили trio-sync в собственный проект/репозиторий (`github.com/Myrshefor/.trio`), отдельно от Finanon, где протокол изначально родился. Задача этого этапа: убедиться, что репозиторий реально создан и запушен на GitHub, что весь контекст передан (см. `HANDOFF.md`, `docs/`), и что дальнейшая разработка самого trio-sync (не Finanon) ведётся здесь, а не смешивается снова с чьим-то ещё проектом.
+Репозиторий `github.com/Myrshefor/.trio` создан и запушен (2026-07-30, коммит `5824ffd`), первый настоящий цикл TO_CODE/FROM_CODE/DIALOGUE состоялся (см. `LEDGER.md`/`DIALOGUE.md`). Дальнейшая разработка самого trio-sync (не Finanon) ведётся здесь.
 
 ## Recent decisions
 - trio-sync выделен из проекта Finanon в собственную среду разработки — этот репозиторий. Finanon получает свой отдельный, независимый `.trio/` внутри своего настоящего git-репозитория (`Разработка Finanon\Finanon\.trio\`), не пересекающийся с историей trio. (chyits + Cowork, 2026-07-30)
@@ -16,10 +16,9 @@ _Living snapshot, not a history — see LEDGER.md for that. Last updated: 2026-0
 - chyits хочет trio-sync как постоянную привычку на все свои будущие проекты, не только на Finanon — это одна из причин, почему у самого протокола теперь есть собственный дом. (chyits, зафиксировано в персональной памяти Claude)
 
 ## Open questions
-- Репозиторий `github.com/Myrshefor/.trio` создан на GitHub и запушен? (нужно действие пользователя/Code — у Cowork нет прав писать в его GitHub)
 - Нужен ли лимит объёма для `DIALOGUE.md` (архивировать раз в N записей), или он реально бесконечный? Открыто с этапа проектирования v0.3.0.
 - Нужна ли более строгая конвенция «resolved» для `TO_CODE.md`/`FROM_CODE.md`, кроме простого «убрать запись, когда обработано»?
-- Локальный плагин trio-sync в Claude Code на машине chyits — обновлён ли до v0.3.0? (тот же вопрос стоит и в Finanon's `.trio/TO_CODE.md`)
+- Инцидент с временным откатом верхнеуровневого `CLAUDE.md` (см. `LEDGER.md`, запись Code от 2026-07-30) — причина не подтверждена технически; следить, повторится ли.
 
 ## Standing requirements
 _Держать в фокусе на любом этапе:_
@@ -28,7 +27,7 @@ _Держать в фокусе на любом этапе:_
 - `DIALOGUE.md` — никогда не тримится никем, кроме явной просьбы пользователя.
 
 ## Next actions
-- [ ] `git init` + первый push в `github.com/Myrshefor/.trio` — owner: chyits/Code (нужен реальный доступ к GitHub-аккаунту)
-- [ ] Обновить локальный плагин trio-sync в Claude Code до v0.3.0 — owner: chyits/Code
-- [ ] Первый настоящий цикл `TO_CODE.md` → `FROM_CODE.md` → `DIALOGUE.md` — попробовать вживую хотя бы раз (пока нигде не проверено на реальном обмене)
+- [x] `git init` + первый push в `github.com/Myrshefor/.trio` — done 2026-07-30 by Code (репозиторий на GitHub уже существовал с авто-README, перезаписан force-push'ем с согласия chyits)
+- [x] Первый настоящий цикл `TO_CODE.md` → `FROM_CODE.md` → `DIALOGUE.md` — done 2026-07-30 by Code
 - [ ] Решить два открытых вопроса выше (лимит DIALOGUE.md, конвенция resolved)
+- [ ] Следить за инцидентом с откатом верхнеуровневого CLAUDE.md — не повторится ли
