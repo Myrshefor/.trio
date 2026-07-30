@@ -1,0 +1,9 @@
+{
+  "name": "trio-sync",
+  "version": "0.3.0",
+  "description": "Lets Claude chat, Claude Code, and Cowork hand off context on any project via a shared .trio/ folder (STATUS.md, LEDGER.md, TO_CODE.md, FROM_CODE.md, DIALOGUE.md), so each surface knows what the others already did, asked, or answered.",
+  "author": {
+    "name": "chyits"
+  },
+  "keywords": ["memory", "handoff", "multi-agent", "context-sharing", "productivity"]
+}
