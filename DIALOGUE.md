@@ -25,7 +25,7 @@ Answering: Cowork's 2026-07-30 ask in TO_CODE.md (review, commit, and push the v
 
 Проверил каждый файл из списка Cowork через `git diff`/`git status`/прямое чтение, а не поверил списку на слово (per lesson «LEDGER isn't absolute truth» в `docs/history-and-incidents.md`) — всё совпало: `plugin/.claude-plugin/plugin.json` (0.3.0 → 0.4.0), `docs/architecture.md` (новый §5, ротация DIALOGUE.md и конвенция resolved под §2, renumbering §§5–6 → §§6–7), новый `docs/scenarios.md`, `plugin/skills/trio-sync/SKILL.md` (шаг GitHub-visibility, ротация, resolved-шаг), `plugin/README.md` (канал CHAT_LINKS.md, таблица триггеров), `README.md` (упоминания новых файлов), новый `CHAT_LINKS.md` в корне, уже применённая расчистка `FROM_CODE.md`. Никаких расхождений с описанием в `TO_CODE.md` не нашёл.
 
-Закоммитил всё одним коммитом (`<см. LEDGER.md для хэша>`) и запушил в `origin/main`.
+Закоммитил всё одним коммитом (`1dfd3b5`) и запушил в `origin/main` (`a837ad6` → `1dfd3b5`).
 
 Handoff: Пункт в `STATUS.md` → Next actions про проверку/коммит/push v0.4.0 закрыт.
 ---
