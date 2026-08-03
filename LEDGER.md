@@ -4,6 +4,33 @@ _Newest entry at the top. Keep entries short — a few lines, not a transcript. 
 _Записи до 2026-07-30 (ниже отмечено) — общая предыстория с проектом Finanon, где протокол физически создавался до разделения на два репозитория. Та же самая история сохранена и в `Finanon\.trio\LEDGER.md` — дальше истории двух проектов расходятся, каждый ведёт свою. Подробный разбор инцидентов — `docs/history-and-incidents.md`._
 
 ---
+### 2026-07-30 (v0.4.1 batch — commit + push) — Code
+**Resolved:** 2026-07-30 — Code — см. DIALOGUE.md (2026-07-30, v0.4.1 batch)
+**Did:** По просьбе chyits прочитал `plugin/skills/trio-sync/SKILL.md` напрямую и следую ему без формальной установки плагина в этой среде (`/plugin` здесь недоступен). Прочитал `TO_CODE.md` — три накопленных пункта от Cowork (HANDOFF.md fix, новый `NEW_PROJECT.md`, v0.4.1 device-bridge discovery + исправленный `description` в `plugin.json`). Сверил каждый файл через `git diff`, не поверил описанию на слово — всё совпало, включая длину `description` (446 символов, пересчитано вручную). Закоммитил всё одним коммитом и запушил в `origin/main`.
+**Touched:** `HANDOFF.md`, `NEW_PROJECT.md` (новый), `plugin/skills/trio-sync/SKILL.md`, `plugin/.claude-plugin/plugin.json`, `README.md`, `TO_CODE.md`/`FROM_CODE.md` (очищены), `DIALOGUE.md`, `STATUS.md`, `LEDGER.md` (этот файл)
+**Handoff:** trio-sync теперь v0.4.1 на GitHub. Открытый пункт «chyits нужно переустановить плагин локально в Cowork/Claude Code» остаётся — это действие пользователя, не Code.
+
+---
+### 2026-07-30 (v0.4.1 — description length fix) — Cowork
+**Did:** chyits попробовал поставить `trio-sync-v0.4.1.plugin` в Cowork — установка упала с «Plugin validation failed: Plugin description must be at most 500 characters» (скриншот). Причина: `description` в `plugin.json` разросся до 518 символов за счёт формулировок v0.4.0. Сократил до 446 символов, тот же смысл короче. Пересобрал оба zip-файла (`.plugin` и marketplace) с исправленным `plugin.json`, проверил длину прямо внутри распакованного архива.
+**Touched:** `plugin/.claude-plugin/plugin.json`, `LEDGER.md` (этот файл)
+**Handoff:** Code — включить исправленный `plugin.json` в тот же коммит, что и остальной пакет v0.4.1 (см. `TO_CODE.md`). chyits — пакет пересобран и переотправлен в чат, старый (518 символов) не ставился и ставиться не должен.
+---
+### 2026-07-30 (v0.4.1 — device-bridge discovery) — Cowork
+**Did:** chyits показал скриншот другой сессии Cowork, застрявшей на Finanon с вопросом «дай точный путь к папке» — обычный текстовый AskUserQuestion, требующий вручную набрать путь. По его просьбе научил протокол не делать этого первым шагом: новый раздел в `SKILL.md` — сначала проверить уже подключённые папки, потом искать самому (`device_list_dir` по вероятным родителям даёт skeleton-листинг имён даже без доступа), и только если поиск не дал результата — просить пользователя ввести путь. Проверил вживую на этой же сессии: `C:\Users\Myrsheftor\Desktop\Claude` → нашёл `Разработка Finanon` → внутри неё `Finanon` — реальный путь Finanon подтверждён: `C:\Users\Myrsheftor\Desktop\Claude\Разработка Finanon\Finanon`. Обновил соответствующий вопрос в `NEW_PROJECT.md`. Версия плагина `0.4.0` → `0.4.1`.
+**Touched:** `plugin/.claude-plugin/plugin.json`, `plugin/skills/trio-sync/SKILL.md`, `NEW_PROJECT.md`, `TO_CODE.md`, `LEDGER.md` (этот файл)
+**Handoff:** Code — добавлено в тот же пакет на коммит в `TO_CODE.md`, что и `HANDOFF.md`/`NEW_PROJECT.md`. chyits — для той застрявшей сессии на Finanon можно сразу указать путь вручную (см. выше) как временное решение; на будущих проектах, после переустановки v0.4.1, Cowork должен находить папку сам.
+---
+### 2026-07-30 (NEW_PROJECT.md) — Cowork
+**Did:** chyits попросил пошагово пройтись, как ставить плагин на следующий проект, и файл, который можно отдать Cowork/Code, чтобы они сами всё настроили и по ходу спросили нужные детали (папка, репозиторий, публичный ли GitHub, какой Claude Project). Написал `NEW_PROJECT.md` в корне репозитория — самодостаточный чеклист вопросов + шаблоны пяти файлов `.trio/` + шаг про `CHAT_LINKS.md`, работает даже без установленного скилла. Добавил перекрёстные ссылки на него в `SKILL.md` и `README.md`. Версию не поднимал — чисто документация, поведение скилла не меняется.
+**Touched:** `NEW_PROJECT.md` (новый), `plugin/skills/trio-sync/SKILL.md`, `README.md`
+**Handoff:** Code — в `TO_CODE.md` тем же пакетом, что и правка `HANDOFF.md` из предыдущей записи; можно закоммитить одним коммитом. chyits — файл отправлен отдельно в чат, готов к использованию уже сейчас (самодостаточен), не обязательно ждать коммита в репозиторий.
+---
+### 2026-07-30 (closing pass) — Cowork
+**Did:** По просьбе chyits «закрыть все моменты» — прошёлся финальной проверкой по v0.4.0 (после того как убедился, что push Code совпадает байт-в-байт с подготовленным). Нашёл два реальных хвоста: (1) `HANDOFF.md` → «Что не сделано» перечислял пять пунктов как открытые, хотя все пять уже закрыты — вычеркнул с пометками «done», добавил указание на `STATUS.md` как живой источник вместо себя; (2) сам репозиторий обновлён до v0.4.0, но установленные копии плагина (в Cowork и в Claude Code chyits) — ещё нет, поэтому новое поведение (шаг про GitHub/`CHAT_LINKS.md`, ротация, конвенция resolved) реально не начнёт применяться, пока chyits не переустановит — собрал и доставил `trio-sync-v0.4.0.plugin` (для Cowork) и `trio-sync-v0.4.0-marketplace.zip` (для Claude Code), тот же формат, что использовался для переустановки v0.2.0/v0.3.0.
+**Touched:** `HANDOFF.md`, `TO_CODE.md`, `LEDGER.md` (этот файл)
+**Handoff:** Code — единственная оставшаяся правка (`HANDOFF.md`) в `TO_CODE.md`, нужно закоммитить+запушить. chyits — пакет переустановки плагина отправлен отдельно в чат, установленные копии в Cowork/Claude Code сейчас всё ещё v0.3.0, пока их не переустановить. Инцидент с откатом `CLAUDE.md` остаётся открытым по своей природе (watch-item, не задача с завершением) — технически закрыть нечем без нового наблюдения, если повторится.
+---
 ### 2026-07-30 (v0.4.0 — commit + push) — Code
 **Resolved:** 2026-07-30 — Code — см. DIALOGUE.md (2026-07-30, v0.4.0 upgrade)
 **Did:** Прочитал `TO_CODE.md`, сверил каждый файл из списка Cowork напрямую через `git diff`/`git status`/чтение содержимого — не поверил списку на слово. Расхождений не нашёл: `plugin/.claude-plugin/plugin.json` (0.3.0 → 0.4.0), `docs/architecture.md` (§5 видимость через GitHub, ротация DIALOGUE.md и конвенция resolved под §2, renumbering), новый `docs/scenarios.md`, `plugin/skills/trio-sync/SKILL.md`, `plugin/README.md` (канал CHAT_LINKS.md + таблица триггеров), `README.md`, новый `CHAT_LINKS.md`, уже очищенный `FROM_CODE.md`. Закоммитил всё одним коммитом и запушил в `origin/main`.

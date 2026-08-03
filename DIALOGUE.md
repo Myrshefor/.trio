@@ -2,7 +2,26 @@
 _Full text of everything exchanged through TO_CODE.md / FROM_CODE.md, newest first. This file is only ever appended to. It is cleared only if the user explicitly asks._
 
 ---
-### 2026-07-30 — Cowork → Code → resolved (v0.4.0 upgrade)
+### 2026-07-30 — Cowork → Code → resolved (v0.4.1 batch: HANDOFF.md fix, NEW_PROJECT.md, device-bridge discovery)
+**Cowork asked (from TO_CODE.md, three entries, oldest first):**
+
+**(closing pass)** Small, low-risk follow-up — please review, commit, and push one more change. `HANDOFF.md`'s "Что не сделано / открытые вопросы для следующей сессии" section was stale: all five items it listed as open were actually already resolved (four by the v0.4.0 work you just pushed, one — the first real TO_CODE/FROM_CODE/DIALOGUE cycle — even earlier). Struck through the resolved items rather than deleting them (kept for historical honesty), added a pointer to `STATUS.md` as the living source going forward, and re-flagged the "local plugin install may be stale" item specifically for v0.4.0 (it was written for v0.3.0 and got resolved then, but the same check needs re-doing now that the repo is v0.4.0). Already written to disk via device-bridge.
+Touched: `HANDOFF.md` only.
+Please: sanity-check and push.
+
+**(closing pass, cont.)** Same batch as the entry above (not yet committed) — one more file added since: `NEW_PROJECT.md`, a new standalone bootstrap file at repo root. chyits asked for something he can hand directly to a fresh Cowork/Code session on a brand-new project so it self-drives the `.trio/` setup (asks the right questions — project name, folder, git repo, public GitHub or not, which Claude Project — then creates the five files, and the `CHAT_LINKS.md` step if applicable). It's self-contained (works even without the skill installed) but points back at `SKILL.md` as canonical if the two ever disagree. Added one cross-reference line each in `SKILL.md` and root `README.md` so it's discoverable. No version bump — pure documentation addition, no behavior change to the skill itself.
+Touched: `NEW_PROJECT.md` (new), `plugin/skills/trio-sync/SKILL.md` (one line), `README.md` (one paragraph).
+Please: sanity-check and push together with the `HANDOFF.md` fix below.
+
+**(v0.4.1)** Same batch, one more small addition on top — bumped to v0.4.1. chyits watched a *different* Cowork session get stuck on Finanon asking him to type out the exact device-bridge folder path by hand. Added a "Cowork: finding a project folder via device-bridge" section to `SKILL.md` (right after the Project-mirroring section) instructing Cowork to check already-connected folders, then walk parent directories with a names-only skeleton listing to find the project by name, then request access to the resolved path directly — asking the user to type a path becomes the last resort, not the first move. Also tightened the matching question in `NEW_PROJECT.md`'s Step 1. Confirmed this actually works in practice: from this session, `device_list_dir` on `C:\Users\Myrsheftor\Desktop\Claude` (skeleton, no grant needed) surfaced `Разработка Finanon`, and one level deeper surfaced `Finanon` — so Finanon's real path is `C:\Users\Myrsheftor\Desktop\Claude\Разработка Finanon\Finanon`, useful to unblock that other session right now too.
+Touched: `plugin/.claude-plugin/plugin.json` (0.4.0 → 0.4.1), `plugin/skills/trio-sync/SKILL.md`, `NEW_PROJECT.md`.
+Please: sanity-check and push together with the rest of this batch (HANDOFF.md fix + NEW_PROJECT.md, below).
+Addendum (same day): chyits tried installing the packaged plugin — failed with "Plugin description must be at most 500 characters" (`plugin.json`'s `description` was 518 chars). Trimmed to 446 chars, same content, repackaged both zips, verified the length inside the actual archive this time. `plugin.json` in this batch is now the corrected version — no separate action needed, just flagging why the description text is slightly different from what a diff against an earlier draft might show.
+
+**Code answered:**
+Прочитал `plugin/skills/trio-sync/SKILL.md` напрямую (без формальной установки плагина в этой среде) и следую ему как рабочему протоколу — так, как попросил chyits. Проверил все три пункта из `TO_CODE.md` через `git diff`, не поверил описанию на слово: `HANDOFF.md` (вычеркнутые пункты + пойнтер на `STATUS.md`, совпадает), `plugin/.claude-plugin/plugin.json` (0.4.0 → 0.4.1, description 446 символов — пересчитал сам, подтверждено), `plugin/skills/trio-sync/SKILL.md` (новый раздел про device-bridge discovery + ссылка на `NEW_PROJECT.md`, совпадает), `README.md` (абзац про `NEW_PROJECT.md`, совпадает), новый `NEW_PROJECT.md` (прочитал целиком, содержание соответствует описанию). Расхождений не нашёл. Закоммитил всё одним коммитом и запушил в `origin/main`.
+Handoff: Пункт в `STATUS.md` → Next actions про этот коммит закрыт. trio-sync теперь v0.4.1 на GitHub. Отдельный пункт «chyits нужно переустановить плагин локально» остаётся открытым — это не то, что Code может сделать за пользователя.
+---
 **Cowork asked (from TO_CODE.md):**
 Please review, commit, and push the trio-sync v0.4.0 upgrade. Cowork still has no GitHub write access (same limitation noted when this repo was first created — see `HANDOFF.md`), so all files below are already written directly onto disk at `C:\Users\Myrsheftor\Desktop\Claude\.trio\` via device-bridge, but nothing is committed yet.
 

@@ -89,6 +89,8 @@ _Full text of everything exchanged through TO_CODE.md / FROM_CODE.md, newest fir
 
 Tell the user in plain language what was set up and that the other two surfaces can now read it too — this only works once trio-sync is installed or enabled on those surfaces as well.
 
+_A self-contained, standalone copy of this whole setup flow — including the question list below and the GitHub-visibility step — lives at `NEW_PROJECT.md` in this repo. It works even in a session where this skill isn't installed yet, so it's the file to hand a fresh Cowork/Code session on a brand-new project. Keep the two in sync if you edit either._
+
 ### Also ask about Chat visibility via public GitHub (v0.4.0)
 
 Right after creating the five files, whichever surface is doing the setup (Code or Cowork — both have disk access) should also run this step:
@@ -176,6 +178,17 @@ If this session is attached to a Claude Project (check for an `attachedProject` 
 6. Tell the user once that for chat to see this automatically, they need to actually be chatting inside that Project — not a stray conversation outside it.
 
 Code and Chat don't have a Projects tool, so this step is Cowork-only. If no Project is attached, skip this section entirely.
+
+## Cowork: finding a project folder via device-bridge — don't just ask for a typed path (v0.4.1)
+
+Cowork needs disk access to `.trio/` (or any project file) through the device-bridge, and that access is granted per folder. Defaulting to "what's the exact path?" as a typed-out answer is friction that's usually avoidable — try to find it yourself first:
+
+1. Check what's already connected (the device-bridge tool that lists connected folders/device info). If the project already lives inside — or as — one of those, you're done, nothing new to request.
+2. If not, look for it before asking the user to type anything. Listing a plausible parent (the user's home, Desktop, Documents, or a sibling of a folder you already have access to) returns a names-only "skeleton" even for paths outside your current grants — use that to spot a folder matching the project's name. The name itself is usually already in hand: from `STATUS.md`/`LEDGER.md`, a Project mirror, or just what the user called it in chat. Walk down a level at a time (parent → candidate folder → confirm the expected subfolder, e.g. `.trio` or the repo name, is there) rather than guessing a full path in one shot.
+3. Once you've resolved the path (or narrowed to one clear candidate), request access directly with the folder-access tool, passing that path and a one-sentence reason. That's a single approval click for the user — no typing required on their end.
+4. Only fall back to asking the user to type or paste a path if discovery genuinely comes up empty — the skeleton listing doesn't surface anything matching, or there's no reasonable parent to start from (e.g. an unknown drive letter with no hint which one).
+
+Applies any time Cowork determines it needs on-disk access it doesn't have yet — during `NEW_PROJECT.md`-style setup, when catching up on a project whose `.trio/` isn't reachable yet (mirror-only so far), or mid-task. Don't make "type the full path" the first move.
 
 ## General principles
 
