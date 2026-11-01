@@ -1,6 +1,8 @@
 # trio — Ledger
 _Newest entry at the top. Keep entries short — a few lines, not a transcript. See DIALOGUE.md for the verbatim exchange._
 
+_С 2026-10-31 (duo-sync v0.5.0) формат другой: сюда дословно попадают блоки, вытесненные из `STATE.md` (`ПОЗАПРОШЛАЯ ЗАПИСЬ`). Записи ниже — прежнего формата (метки Chat/Cowork читать как Claude, строки `Resolved:` — конвенция v0.4)._
+
 _Записи до 2026-07-30 (ниже отмечено) — общая предыстория с проектом Finanon, где протокол физически создавался до разделения на два репозитория. Та же самая история сохранена и в `Finanon\.trio\LEDGER.md` — дальше истории двух проектов расходятся, каждый ведёт свою. Подробный разбор инцидентов — `docs/history-and-incidents.md`._
 
 ---

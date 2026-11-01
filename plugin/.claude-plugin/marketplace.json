@@ -1,0 +1,11 @@
+{
+  "name": "duo-sync-marketplace",
+  "owner": { "name": "chyits" },
+  "plugins": [
+    {
+      "name": "duo-sync",
+      "source": "./",
+      "description": "Hand-off between the Claude app and Claude Code through a shared .trio/ folder (successor to trio-sync)."
+    }
+  ]
+}
