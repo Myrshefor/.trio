@@ -1,38 +1,39 @@
 # trio — State
-_Last updated: 2026-11-01 18:27 by Code. Rotation: СЕЙЧАС → ПРОШЛАЯ ЗАПИСЬ → ПОЗАПРОШЛАЯ ЗАПИСЬ → LEDGER.md_
+_Last updated: 2026-11-01 19:00 by Claude. Rotation: СЕЙЧАС → ПРОШЛАЯ ЗАПИСЬ → ПОЗАПРОШЛАЯ ЗАПИСЬ → LEDGER.md_
 
 _Перенос с STATUS.md (v0.4.1) выполнен 2026-10-31: все решения, открытые вопросы и next actions из последнего STATUS.md (2026-07-30) перенесены ниже дословно; дословная копия — `docs/archive/v0.4.1/STATUS.md`._
 
 ## СЕЙЧАС
-### 2026-11-01 18:27 — Code
-**Фокус:** duo-sync v0.5.0 закоммичен, запушен и помечен тегом в `github.com/Myrshefor/.trio`; заглушки v0.4.1 удалены. Осталось: `claude-workspace` + `sync-state.ps1`, установка плагина, перенос Taskinator.
+### 2026-11-01 19:00 — Claude
+**Фокус:** duo-sync v0.5.0 выпущен и запушен; Finanon, claude-workspace и Taskinator перенесены. Осталось закоммитить Taskinator и разобраться с откатом `STATE.md`/`INBOX.md` в 18:29.
 
 **Сделано:**
-- INBOX #1 (пункты 1–3 + `git rm` заглушек) выполнен, статус `answered`, подробности в `INBOX.md` #1.
-- Сверка `git status`/`git diff` со списком: совпало; сверх списка — `plugin/.claude-plugin/marketplace.json` (часть пакета, закоммичен).
-- Проверки: архив = HEAD (12/12 по `MANIFEST.txt`; прямое сравнение с `git show HEAD:` расходится только из-за `core.autocrlf=true` — CRLF на диске, LF в blob; после `git add` blob идентичны); `LEDGER.md`/`HANDOFF.md`/`docs/history-and-incidents.md` — только добавления; `description` = 294 символа.
-- `5430f20` — duo-sync v0.5.0, тег `v0.5.0` на нём; `e59bba8` — `git rm` `STATUS.md`, `TO_CODE.md`, `FROM_CODE.md`, `CHAT_LINKS.md`, `plugin/skills/trio-sync/`. Оба запушены в `origin/main`.
+- Code (по его отчётам в чате, не дословно): коммит `5430f20` (v0.5.0, тег `v0.5.0`), `e59bba8` (заглушки удалены `git rm`), Finanon `CLAUDE.md` — `72fce7f` (`.trio/` не добавлена), `claude-workspace`: правка `sync-state.ps1` (сравнение по всему дереву, `18e32b3`) и снимок Finanon `.trio` вместе с `_legacy-v0.4/` запушен (`7c1a583`), хэши сверены с `MANIFEST.txt`.
+- INBOX #1 закрыт (ответ Code ниже — по его отчёту в чате).
+- chyits удалил в приложении два старых навыка `trio-sync` и плагин «Trio sync». Плагин в Claude Code не ставился: Code работает внутри приложения, окно «Add marketplace» принимает только GitHub-URL, локальную папку — нет, терминального `claude` нет. Решено не ставить: Code читает блок в `CLAUDE.md` проекта и файлы `.trio/`.
+- **Taskinator перенесён** (2026-11-01, chyits сказал «тихо»; файлы `.trio/` не менялись ≈ 22 часа): снимок `Taskinator\.trio\_legacy-v0.4\` (STATUS, TO_CODE, FROM_CODE, CHAT_LINKS + `MANIFEST.txt`, хэши записанных копий сверены); `STATE.md` собран из `STATUS.md` дословно по строкам (сверка построчно: пропущено 0, кроме раздела «Roles»); `INBOX.md` — один элемент «проверить актуальность» (допбриф 17.10 п. 12–13, единственный без отметки «сделано»); `LEDGER.md` +1 строка сверху (остальное байт-в-байт); `DIALOGUE.md` не менялся; в `CLAUDE.md` Taskinator заменён только путь `TO_CODE.md` → `INBOX.md` (+ ссылка на `STATE.md`); старые STATUS/TO_CODE/FROM_CODE/CHAT_LINKS — заглушки. **Не закоммичено** (`.trio/` Taskinator в git).
 
 **Решения:**
-- (2026-11-01, Code) Тег `v0.5.0` поставлен на коммит с заглушками (`5430f20`), а не после `git rm` — в порядке, указанном в запросе. Если нужен тег на чистом дереве — перенести вручную (тег уже запушен).
-- Решения 2026-10-31 (две поверхности, `STATE.md`, `INBOX.md`, ревизия по расписанию, сокращённый `SKILL.md`, имя duo-sync, папка `.trio/` не переименовывается) — без изменений, см. ПРОШЛАЯ ЗАПИСЬ; утверждение имени папки `.trio/` всё ещё за chyits.
+- (2026-11-01, Claude) Taskinator: `_legacy-v0.4/` **не удалять**, пока 16 ответов Code и 6 брифов, которых нет в `DIALOGUE.md` (сверка по заголовкам), не перенесены туда: иначе потеряются.
+- (2026-11-01, Claude) Блок duo-sync в `CLAUDE.md` Taskinator не добавлялся: в нём правки правил — только после «да» автора.
+- (2026-11-01, chyits) Плагин в Code не ставить, если нет простого способа.
 
-**Открыто (перенесено):**
-- Инцидент с временным откатом верхнеуровневого `CLAUDE.md` — watch-item, без новых наблюдений.
-- Taskinator не перенесён — нужен «тихий» момент и подтверждение chyits; процедура — `docs/migration-v0.5.md`.
-- Три устаревших зеркала `claude/trio-*.md` в Project «Cloude Trio» — удаляет chyits вручную (или разрешает Claude).
-- Еженедельная ревизия: `trig_018QdHvpexwc2PTT9M4e9ptt`, первый запуск 2026-11-01 — результат Code не проверял.
-- INBOX #1 ждёт, пока Claude прочитает ответ и закроет его.
+**Открыто:**
+- 2026-11-01 18:29: `STATE.md` и `INBOX.md` в `Desktop\Claude\.trio\` вернулись к версии от 31.10 (оба записаны в одну секунду, `LEDGER.md` и остальные не тронуты) — похоже на git-операцию в сессии Code. Пропали закрытие #1, блок Code в `STATE.md` и ответ Code; восстановлено по диску и отчётам в чате, не дословно. Причина не проверена.
+- Инцидент с временным откатом верхнеуровневого `CLAUDE.md` (watch-item, см. `LEDGER.md`, запись Code от 2026-07-30). Откат `STATE.md`/`INBOX.md` — возможно, повторение той же природы, нужен только новый факт наблюдения.
+- Зеркала в Claude Project: остались `trio-status-snapshot.md`, `trio-dialogue-mirror.md`, `trio-from-code-snapshot.md` (устарели, автоудаление заблокировано) — chyits удаляет вручную в claude.ai.
+- Тег `v0.5.0` стоит на коммите `5430f20` (заглушки ещё были, `git rm` позже в `e59bba8`); тег запушен, не мешает.
+- Еженедельная ревизия: `trig_018QdHvpexwc2PTT9M4e9ptt` (воскресенье 11:17 МСК); результат первого запуска 2026-11-01 не проверен.
+- Имя папки `.trio/` не меняется (на утверждение chyits).
 
 **Дальше:**
-- [x] Code: проверить `git status`/`git diff` по INBOX #1, закоммитить, запушить, тег `v0.5.0`, `git rm` заглушек — done 2026-11-01 by Code (`5430f20`, `e59bba8`)
-- [ ] `claude-workspace`: закоммитить и запушить правки, затем `.\sync-state.ps1 -Push` (снимок `.trio` Finanon на второй машине → v0.5.0) — owner: Code, по отдельному запросу chyits (в этой сессии было велено не трогать)
-- [ ] Claude: прочитать ответ на INBOX #1 и закрыть его — owner: Claude
-- [x] chyits: переустановить trio-sync v0.4.1 — снято, заменено установкой v0.5.0
-- [ ] chyits: установить плагин duo-sync v0.5.0 в приложении Claude и в Claude Code; отключить `trio-sync` и `trio-sync-2` — owner: chyits
-- [ ] chyits + Claude: перенести Taskinator — owner: chyits + Claude
-- [ ] chyits: удалить три устаревших документа `claude/trio-*.md` в Project «Cloude Trio» — owner: chyits
-- [ ] Следить за инцидентом с откатом верхнеуровневого `CLAUDE.md` — не закрывается, нужен только новый факт наблюдения
+- [ ] Code (сессия в `Desktop\Claude\Taskinator`): `git status`, закоммитить `CLAUDE.md` и `.trio/` одним коммитом, не пушить без слова автора (в Taskinator пуш = деплой по правилам проекта) — owner: Code
+- [ ] Code (сессия в `Desktop\Claude\.trio`): `git status` / `git reflog` / `git stash list` — выяснить, что откатило `STATE.md` и `INBOX.md` в 18:29; закоммитить восстановленные — owner: Code
+- [ ] chyits: решить, добавить ли в `CLAUDE.md` Taskinator блок duo-sync (4 строки, как у Finanon) — owner: chyits
+- [ ] chyits: удалить три документа `claude/trio-*.md` в Project — owner: chyits
+- [ ] chyits: утвердить, что папка остаётся `.trio/` — owner: chyits
+- [ ] Claude: проверить результат первого запуска еженедельной ревизии — owner: Claude
+- [ ] Через неделю: проверить, что в Taskinator всё работает (`STATE.md` читается, INBOX #1 разобран); `_legacy-v0.4/` не удалять (см. «Решения») — owner: Claude
 
 ## ПРОШЛАЯ ЗАПИСЬ
 ### 2026-10-31 21:00 — Claude
